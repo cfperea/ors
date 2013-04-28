@@ -1,6 +1,7 @@
 --------------------------------------------------------------------------------------------------------------------------------------------------
 
-- Project: Actividades de Responsabilidad Social
+- Project: SIMARS
+- Description: Activity manager
 - Software Engineer: Carlos F. Perea Tanaka
 - Start Date: March 10, 2013
 - Last Modified: April 28th, 2013

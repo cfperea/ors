@@ -7,10 +7,16 @@ $this->breadcrumbs=array(
 	'Create',
 );
 
-$this->menu=array(
-	array('label'=>'List User', 'url'=>array('index')),
-	array('label'=>'Manage User', 'url'=>array('admin')),
-);
+if (Yii::app()->user->isAdmin())
+{
+	$this->widget('bootstrap.widgets.TbTabs', array(
+	'type' => 'tabs',
+	'tabs' => array(
+		array('label'=>'Listar usuarios', 'url'=>array('index')),
+		array('label'=>Yii::t('app','Administrar usuarios'), 'url'=>array('admin')),
+		))
+	);
+}
 ?>
 
 <h1>Create User</h1>

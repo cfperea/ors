@@ -1,9 +1,8 @@
 <?php $this->pageTitle=Yii::app()->name . ' - '.MessageModule::t("Messages:sent"); ?>
 <?php
-	$this->breadcrumbs=array(
-		MessageModule::t("Messages"),
-		MessageModule::t("Sent"),
-	);
+	$this->widget('bootstrap.widgets.TbBreadcrumbs', array(
+    		'links'=>array('Mensajes', 'Enviados'),
+	));
 ?>
 
 <?php $this->renderPartial(Yii::app()->getModule('message')->viewPath . '/_navigation') ?>
@@ -35,9 +34,7 @@
 		<?php endforeach ?>
 	</table>
 
-	<div class="row buttons">
-		<?php echo CHtml::submitButton(MessageModule::t("Delete Selected")); ?>
-	</div>
+	<?php echo CHtml::submitButton(MessageModule::t("Borrar seleccionados")); ?>
 
 	<?php $this->endWidget(); ?>
 

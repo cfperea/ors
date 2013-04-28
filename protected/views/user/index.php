@@ -8,7 +8,6 @@ $this->widget('bootstrap.widgets.TbBreadcrumbs', array(
 
 if (Yii::app()->user->isAdmin())
 {
-
 	$this->widget('bootstrap.widgets.TbTabs', array(
 	'type' => 'tabs',
 	'tabs' => array(
@@ -16,8 +15,6 @@ if (Yii::app()->user->isAdmin())
 		array('label'=>Yii::t('app','Administrar usuarios'), 'url'=>array('admin')),
 		))
 	);
-
-	
 }
 ?>
 

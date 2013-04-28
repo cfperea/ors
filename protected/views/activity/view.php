@@ -3,15 +3,34 @@
 /* @var $model Activity */
 /* @var $extraParameters Array of extra parameters (key, value) */
 
-$this->breadcrumbs=array(
-	'Activities'=>array('index'),
-	$model->name,
-);
+$this->widget('bootstrap.widgets.TbBreadcrumbs', array(
+    'links'=>array('Actividades'=>array('index'), $model->name),
+));
 
-$this->menu=array(
-	array('label'=>'List Activity', 'url'=>array('index')),
-	array('label'=>'Create Activity', 'url'=>array('create')),
-);
+if (Yii::app()->user->checkAccess('owner', array('activity'=>$model)) || Yii::app()->user->isAdmin())
+{
+	$this->widget('bootstrap.widgets.TbTabs', array(
+	'type' => 'tabs',
+	'tabs' => array(
+		array('label'=>Yii::t('app','Listar actividades'), 'url'=>array('index')),
+		array('label'=>'Crear actividad', 'url'=>array('create')),
+		array('label'=>Yii::t('app','Actualizar actividad'), 'url'=>array('update', 'id'=>$model->id)),
+		array('label'=>Yii::t('app','Borrar actividad'), 'url'=>'#', 'linkOptions'=>array('submit'=>array('delete','id'=>$model->id),'confirm'=>'¿Estás seguro de borrar esta actividad?')),
+		array('label'=>'Agregar usuario', 'url'=>array('adduser', 'id'=>$model->id))
+		))
+	);
+}
+elseif (Yii::app()->user->checkAccess('member', array('activity'=>$model)))
+{
+	$this->widget('bootstrap.widgets.TbTabs', array(
+	'type' => 'tabs',
+	'tabs' => array(
+		array('label'=>Yii::t('app','Listar actividades'), 'url'=>array('index')),
+		array('label'=>'Crear actividad', 'url'=>array('create')),
+		array('label'=>Yii::t('app','Actualizar actividad'), 'url'=>array('update', 'id'=>$model->id))
+		))
+	);
+}
 
 if (Yii::app()->user->checkAccess('member', array('activity'=>$model)))
 {
@@ -24,14 +43,9 @@ if (Yii::app()->user->checkAccess('owner', array('activity'=>$model)))
 	$this->menu[] = array('label'=>'Agregar Usuario', 'url'=>array('adduser', 'id'=>$model->id));
 }
 
-if (Yii::app()->user->isAdmin())
-{
-	$this->menu[] = array('label'=>'Manage Activities', 'url'=>array('admin'));
-}
-
 ?>
 
-<h1>View Activity #<?php echo $model->id; ?></h1>
+<h1>Ver actividad #<?php echo $model->id; ?></h1>
 
 <?php $this->widget('zii.widgets.CDetailView', array(
 	'data'=>$model,

@@ -1,14 +1,16 @@
 <?php $this->pageTitle=Yii::app()->name . ' - '.MessageModule::t("Messages:inbox"); ?>
 <?php
-	$this->breadcrumbs=array(
-		MessageModule::t("Messages"),
-		MessageModule::t("Inbox"),
-	);
+
+	$this->widget('bootstrap.widgets.TbBreadcrumbs', array(
+    		'links'=>array('Mensajes', 'Bandeja de entrada'),
+	));
 ?>
 
 <?php $this->renderPartial(Yii::app()->getModule('message')->viewPath . '/_navigation') ?>
 
 <h2><?php echo MessageModule::t('Bandeja de entrada'); ?></h2>
+
+<div id="inbox-box">
 
 <?php if ($messagesAdapter->data): ?>
 	<?php $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
@@ -20,7 +22,7 @@
 	<table class="dataGrid">
 		<tr>
 			<th  class="label-message">De</th>
-			<th  class="label-message">Titulo</th>
+			<th  class="label-message">Asunto</th>
 			<th  class="label-message">Fecha</th>
 		</tr>
 		<?php foreach ($messagesAdapter->data as $index => $message): ?>
@@ -36,11 +38,11 @@
 		<?php endforeach ?>
 	</table>
 
-	<div class="row buttons">
-		<?php echo CHtml::submitButton(MessageModule::t("Borrar seleccionado")); ?>
-	</div>
+	<?php echo CHtml::submitButton(MessageModule::t("Borrar seleccionados")); ?>
 
 	<?php $this->endWidget(); ?>
 
 	<?php $this->widget('CLinkPager', array('pages' => $messagesAdapter->getPagination())) ?>
 <?php endif; ?>
+
+</div>

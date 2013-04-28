@@ -2,15 +2,17 @@
 /* @var $this ActivityController */
 /* @var $model Activity */
 
-$this->breadcrumbs=array(
-	'Activities'=>array('index'),
-	'Manage',
-);
+$this->widget('bootstrap.widgets.TbBreadcrumbs', array(
+    'links'=>array('Actividades'=>array('index'), 'Administrar actividades'),
+));
 
-$this->menu=array(
-	array('label'=>'List Activity', 'url'=>array('index')),
-	array('label'=>'Create Activity', 'url'=>array('create')),
-);
+$this->widget('bootstrap.widgets.TbTabs', array(
+	'type' => 'tabs',
+	'tabs' => array(
+		array('label'=>'Listar actividades', 'url'=>array('index')),
+		array('label'=>'Crear actividad', 'url'=>array('create')),
+		))
+	);
 
 Yii::app()->clientScript->registerScript('search', "
 $('.search-button').click(function(){

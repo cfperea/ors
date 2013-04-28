@@ -1,13 +1,20 @@
 <?php
 $this->pageTitle = Yii::app()->name . ' - Agregar usuario a actividad';
-$this->breadcrumbs=array(
-	$model->activity->name => array('view', 'id' => $model->activity->id),
-	'Agregar usuario',
-);
-$this->menu = array(
-	array('label'=>'Volver a actividad',
-			'url'=>array('view', 'id'=>$model->activity->id)),
-);
+
+$this->widget('bootstrap.widgets.TbBreadcrumbs', array(
+    'links'=>array($model->activity->name => array('view', 'id' => $model->activity->id), 'Agregar usuario'),
+));
+
+$this->widget('bootstrap.widgets.TbTabs', array(
+	'type' => 'tabs',
+	'tabs' => array(
+		array('label'=>Yii::t('app','Listar actividades'), 'url'=>array('index')),
+		array('label'=>'Crear actividad', 'url'=>array('create')),
+		array('label'=>Yii::t('app','Ver actividad'), 'url'=>array('view', 'id'=>$model->activity->id)),
+		array('label'=>Yii::t('app','Actualizar actividad'), 'url'=>array('update', 'id'=>$model->activity->id)),
+		array('label'=>Yii::t('app','Borrar actividad'), 'url'=>'#', 'linkOptions'=>array('submit'=>array('delete','id'=>$model->activity->id),'confirm'=>'¿Estás seguro de borrar esta actividad?'))
+		))
+	);
 ?>
 <h1>Agregar usuario a <?php echo $model->activity->name; ?></h1>
 

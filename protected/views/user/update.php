@@ -2,18 +2,23 @@
 /* @var $this UserController */
 /* @var $model User */
 
-$this->breadcrumbs=array(
-	'Users'=>array('index'),
-	$model->name=>array('view','id'=>$model->id),
-	'Update',
-);
+$this->widget('bootstrap.widgets.TbBreadcrumbs', array(
+    'links'=>array('Usuarios'=>array('index'), $model->name=>array('view','id'=>$model->id), 'Actualizar'),
+));
 
-$this->menu=array(
-	array('label'=>'List User', 'url'=>array('index')),
-	array('label'=>'Create User', 'url'=>array('create')),
-	array('label'=>'View User', 'url'=>array('view', 'id'=>$model->id)),
-	array('label'=>'Manage User', 'url'=>array('admin')),
-);
+if (Yii::app()->user->isAdmin())
+{
+	$this->widget('bootstrap.widgets.TbTabs', array(
+		'type' => 'tabs',
+		'tabs' => array(
+			array('label'=>'Listar usuarios', 'url'=>array('index')),
+			array('label'=>Yii::t('app','Crear usuario'), 'url'=>array('create')),
+			array('label'=>Yii::t('app','Ver usuario'),'url'=>array('view', 'id'=>$model->id)),
+			array('label'=>Yii::t('app','Borrar Usuario'), 'url'=>'#', 'linkOptions'=>array('submit'=>array('delete','id'=>$model->id),'confirm'=>'Are you sure you want to delete this item?')),
+			array('label'=>Yii::t('app','Administrar usuarios'), 'url'=>array('admin')),
+			))
+		);
+}
 ?>
 
 <h1>Update User <?php echo $model->id; ?></h1>

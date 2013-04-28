@@ -2,11 +2,16 @@
 <?php $isIncomeMessage = $viewedMessage->receiver_id == Yii::app()->user->getId() ?>
 
 <?php
-	$this->breadcrumbs = array(
+
+	$this->widget('bootstrap.widgets.TbBreadcrumbs', array(
+    		'links'=>array('Mensajes', 'Ver mensaje'),
+	));
+
+	/*$this->breadcrumbs = array(
 		MessageModule::t("Messages"),
 		($isIncomeMessage ? MessageModule::t("Inbox") : MessageModule::t("Sent")) => ($isIncomeMessage ? 'inbox' : 'sent'),
 		CHtml::encode($viewedMessage->subject),
-	);
+	);*/
 ?>
 
 <?php $this->renderPartial(Yii::app()->getModule('message')->viewPath . '/_navigation') ?>
@@ -16,24 +21,24 @@
 	'enableAjaxValidation'=>false,
 	'action' => $this->createUrl('delete/', array('id' => $viewedMessage->id))
 )); ?>
-	<button class="btn danger"><?php echo MessageModule::t("Delete") ?></button>
+	<button class="btn danger"><?php echo MessageModule::t("Borrar") ?></button>
 <?php $this->endWidget(); ?>
 
 <?php if ($isIncomeMessage): ?>
-	<h2 class="message-from">From: <?php echo $viewedMessage->getSenderName() ?></h2>
+	<h2 class="message-from">De: <?php echo $viewedMessage->getSenderName() ?></h2>
 <?php else: ?>
-	<h2 class="message-to">To: <?php echo $viewedMessage->getReceiverName() ?></h2>
+	<h2 class="message-to">Para: <?php echo $viewedMessage->getReceiverName() ?></h2>
 <?php endif; ?>
 
-<h3 class="message-subject"><?php echo CHtml::encode($viewedMessage->subject) ?></h3>
+<h3 class="message-subject">Asunto: <?php echo CHtml::encode($viewedMessage->subject) ?></h3>
 
-<span class="date"><?php echo date(Yii::app()->getModule('message')->dateFormat, strtotime($viewedMessage->created_at)) ?></span>
+<span class="date">Fecha: <?php echo date(Yii::app()->getModule('message')->dateFormat, strtotime($viewedMessage->created_at)) ?></span>
 
-<div class="message-body">
+<div class="well">
 	<?php echo CHtml::encode($viewedMessage->body) ?>
 </div>
 
-<h2><?php echo MessageModule::t('Reply') ?></h2>
+<h2><?php echo MessageModule::t('Responder') ?></h2>
 
 <div class="form">
 	<?php $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
@@ -55,8 +60,7 @@
 	</div>
 
 	<div class="row">
-		<?php echo $form->labelEx($message,'body'); ?>
-		<?php echo $form->textArea($message,'body'); ?>
+		<?php echo $form->html5EditorRow($message, 'body', array('class'=>'span4', 'rows'=>5, 'height'=>'200', 'options'=>array('color'=>true))); ?>
 		<?php echo $form->error($message,'body'); ?>
 	</div>
 

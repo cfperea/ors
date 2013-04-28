@@ -1,22 +1,21 @@
 <?php $this->pageTitle=Yii::app()->name . ' - '.MessageModule::t("Compose Message"); ?>
 <?php
-	$this->breadcrumbs=array(
-		MessageModule::t("Messages"),
-		MessageModule::t("Compose"),
-	);
+	$this->widget('bootstrap.widgets.TbBreadcrumbs', array(
+    		'links'=>array('Mensajes', 'Escribir'),
+	));
 ?>
 
 <?php $this->renderPartial(Yii::app()->getModule('message')->viewPath . '/_navigation'); ?>
 
-<h2><?php echo MessageModule::t('Compose New Message'); ?></h2>
+<h2><?php echo MessageModule::t('Escribir nuevo mensaje'); ?></h2>
 
 <div class="form">
-	<?php $form = $this->beginWidget('CActiveForm', array(
+	<?php $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
 		'id'=>'message-form',
 		'enableAjaxValidation'=>false,
 	)); ?>
 
-	<p class="note"><?php echo MessageModule::t('Fields with <span class="required">*</span> are required.'); ?></p>
+	<p class="note"><?php echo MessageModule::t('Campos con <span class="required">*</span> son obligatorios.'); ?></p>
 
 	<?php echo $form->errorSummary($model); ?>
 
@@ -34,13 +33,12 @@
 	</div>
 
 	<div class="row">
-		<?php echo $form->labelEx($model,'body'); ?>
-		<?php echo $form->textArea($model,'body'); ?>
+		<?php echo $form->html5EditorRow($model, 'body', array('class'=>'span4', 'rows'=>5, 'height'=>'200', 'options'=>array('color'=>true))); ?>
 		<?php echo $form->error($model,'body'); ?>
 	</div>
 
 	<div class="row buttons">
-		<?php echo CHtml::submitButton(MessageModule::t("Send")); ?>
+		<?php echo CHtml::submitButton(MessageModule::t("Enviar")); ?>
 	</div>
 
 	<?php $this->endWidget(); ?>

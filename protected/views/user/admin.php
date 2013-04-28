@@ -2,15 +2,20 @@
 /* @var $this UserController */
 /* @var $model User */
 
-$this->breadcrumbs=array(
-	Yii::t('app','Users')=>array('index'),
-	Yii::t('app','Manage'),
-);
+$this->widget('bootstrap.widgets.TbBreadcrumbs', array(
+    'links'=>array('Usuarios'=>array('index'), 'Administrar'),
+));
 
-$this->menu=array(
-	array('label'=>'List User', 'url'=>array('index')),
-	array('label'=>'Create User', 'url'=>array('create')),
-);
+if (Yii::app()->user->isAdmin())
+{
+	$this->widget('bootstrap.widgets.TbTabs', array(
+	'type' => 'tabs',
+	'tabs' => array(
+		array('label'=>'Listar usuarios', 'url'=>array('index')),
+		array('label'=>Yii::t('app','Crear usuario'), 'url'=>array('create'))
+		))
+	);
+}
 
 Yii::app()->clientScript->registerScript('search', "
 $('.search-button').click(function(){
@@ -26,14 +31,14 @@ $('.search-form form').submit(function(){
 ");
 ?>
 
-<h1>Manage Users</h1>
+<h1>Administrar usuarios</h1>
 
 <p>
-You may optionally enter a comparison operator (<b>&lt;</b>, <b>&lt;=</b>, <b>&gt;</b>, <b>&gt;=</b>, <b>&lt;&gt;</b>
-or <b>=</b>) at the beginning of each of your search values to specify how the comparison should be done.
+Puedes opcionalmente utilizar los comparadores (<b>&lt;</b>, <b>&lt;=</b>, <b>&gt;</b>, <b>&gt;=</b>, <b>&lt;&gt;</b>
+or <b>=</b>) al comienzo de cada busqueda para especificar cómo se debe realizar la comparación.
 </p>
 
-<?php echo CHtml::link('Advanced Search','#',array('class'=>'search-button')); ?>
+<?php echo CHtml::link('Busqueda avanzada','#',array('class'=>'search-button')); ?>
 <div class="search-form" style="display:none">
 <?php $this->renderPartial('_search',array(
 	'model'=>$model,
