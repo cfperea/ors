@@ -5,6 +5,18 @@
 */
 
 $this->pageTitle=Yii::app()->name." | Pontificia Universidad Javeriana, Cali";
+
+$headerContent = 'Hola '. Yii::app()->user->name .', tu &uacute;ltima sesi&oacute;n fue en '.strftime("%d/%m/%Y a las %I:%M:%S %P", Yii::app()->user->lastLogin).'</br>';
+$newMessages = Yii::app()->getModule('message')->getCountUnreadedMessages(Yii::app()->user->getId());
+if ($newMessages)
+{
+	$headerContent = $headerContent.'Tienes <b>'.$newMessages. '</b> mensajes nuevos. Ir a la <a href="'.$this->createUrl('/message').'">bandeja de entrada</a>.'; 
+}
+else
+{
+	$headerContent = $headerContent.'No tienes ningún mensaje nuevo. Ir a la <a href="'.$this->createUrl('/message').'">bandeja de entrada</a>.'; 
+}
+
 ?>
 
 <div class="page-header">
@@ -16,7 +28,7 @@ $this->pageTitle=Yii::app()->name." | Pontificia Universidad Javeriana, Cali";
 <?php $this->widget('bootstrap.widgets.TbBox', array(
     'title' => 'Bienvenido',
     'headerIcon' => 'icon-home',
-    'content' => 'Hola '. Yii::app()->user->name .', tu &uacute;ltima sesi&oacute;n fue en '.strftime("%d/%m/%Y a las %I:%M:%S %P", Yii::app()->user->lastLogin)
+    'content' => $headerContent,
 )); ?>
 
 <p>
@@ -114,7 +126,8 @@ $this->pageTitle=Yii::app()->name." | Pontificia Universidad Javeriana, Cali";
 	<?php endif; ?>
 </p>
 <?php else: ?>
-
+	
+	<!--
 	<?php $this->beginWidget('bootstrap.widgets.TbHeroUnit', array(
 	'heading'=>'Administra tus actividades!',
 	)); ?>
@@ -130,6 +143,7 @@ $this->pageTitle=Yii::app()->name." | Pontificia Universidad Javeriana, Cali";
 		</p>
 	 
 	<?php $this->endWidget(); ?>
+	-->
 
 	<?php $this->beginWidget('bootstrap.widgets.TbBox', array(
     	'title' => 'Conéctate',
