@@ -6,21 +6,24 @@
 
 $this->pageTitle=Yii::app()->name." | Pontificia Universidad Javeriana, Cali";
 
-$headerContent = 'Hola '. Yii::app()->user->name .', tu &uacute;ltima sesi&oacute;n fue en '.strftime("%d/%m/%Y a las %I:%M:%S %P", Yii::app()->user->lastLogin).'</br>';
-$newMessages = Yii::app()->getModule('message')->getCountUnreadedMessages(Yii::app()->user->getId());
-if ($newMessages)
+if (!Yii::app()->user->isGuest)
 {
-	$headerContent = $headerContent.'Tienes <b>'.$newMessages. '</b> mensajes nuevos. Ir a la <a href="'.$this->createUrl('/message').'">bandeja de entrada</a>.'; 
+	trace(Yii::app()->user->lastLogin);
+	$headerContent = 'Hola '. Yii::app()->user->name .', tu &uacute;ltima sesi&oacute;n fue en '.strftime("%d/%m/%Y a las %I:%M:%S %P", Yii::app()->user->lastLogin).'</br>';
+	$newMessages = Yii::app()->getModule('message')->getCountUnreadedMessages(Yii::app()->user->getId());
+	if ($newMessages)
+	{
+		$headerContent = $headerContent.'Tienes <b>'.$newMessages. '</b> mensajes nuevos. Ir a la <a href="'.$this->createUrl('/message').'">bandeja de entrada</a>.'; 
+	}
+	else
+	{
+		$headerContent = $headerContent.'No tienes ningún mensaje nuevo. Ir a la <a href="'.$this->createUrl('/message').'">bandeja de entrada</a>.'; 
+	}
 }
-else
-{
-	$headerContent = $headerContent.'No tienes ningún mensaje nuevo. Ir a la <a href="'.$this->createUrl('/message').'">bandeja de entrada</a>.'; 
-}
-
 ?>
 
 <div class="page-header">
-	  <h1>SIMARS | <small>Pontificia Universidad Javeriana, Cali</small></h1>
+	  <h1><img src="<?php echo Yii::app()->request->baseUrl; ?>/images/PUJ_IHS_256.ico" alt="SIMARS" height="48" width="48" /> SIMARS | <small>Pontificia Universidad Javeriana, Cali</small></h1>
 </div>
 
 <?php if (!Yii::app()->user->isGuest): ?>

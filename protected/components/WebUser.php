@@ -4,7 +4,7 @@ class WebUser extends CWebUser {
  
 	// Store model to not repeat query.
 	private $_model;
-	public $lastLogin;
+	//public $lastLogin;
 
 
 	// This is a function that checks the field 'role'
@@ -37,7 +37,7 @@ class WebUser extends CWebUser {
             if ($id !== null)
 			{
                 $this->_model = User::model()->findByPk($id);
-				$lastLogin = $this->_model->lastLogin;
+				//$lastLogin = $this->_model->lastLogin;
 			}
         }
         return $this->_model;
